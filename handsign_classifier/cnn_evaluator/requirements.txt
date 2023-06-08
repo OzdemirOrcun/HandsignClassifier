@@ -1,0 +1,8 @@
+aiohttp
+Flask
+numpy
+scikit_learn
+sklearn
+pymongo
+keras
+tensorflow

@@ -15,7 +15,7 @@ class CNNCreator:
         self.model = models.Sequential()
         
     
-    def build_default_model(self,verbose=0):
+    def build_default_model(self,verbose=1):
         self.model.add(layers.Conv2D(28, (3, 3), activation='relu', input_shape=(28, 28, 1)))
         self.model.add(layers.MaxPooling2D((2, 2)))
         self.model.add(layers.Conv2D(64, (3, 3), activation='relu'))
@@ -29,7 +29,9 @@ class CNNCreator:
         self.model.add(layers.Dense(25, activation = 'softmax'))
         if verbose == 1:
             print(self.model.summary())
-        return self.model
+            return self.model, self.model.summary()
+        else:
+            return self.model,None
 
     @staticmethod
     def reshape_data(data):

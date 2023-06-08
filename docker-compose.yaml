@@ -1,0 +1,51 @@
+version: "3"
+
+services:
+  cnn_creator:
+    build:
+      context: .
+      dockerfile: ./handsign_classifier/cnn_creator/dockerfile
+    container_name: cnn_creator
+    env_file:
+      - local.env
+    volumes:
+      - ./handsign_classifier/cnn_creator/:/usr/src/app/
+      - ./output:/usr/src/app/output/
+    ports:
+      - "8010:8010"
+    command:
+      python3 app.py
+
+  cnn_evaluator:
+    build:
+      context: .
+      dockerfile: ./handsign_classifier/cnn_evaluator/dockerfile
+    container_name: cnn_evaluator
+    env_file:
+      - local.env
+    volumes:
+      - ./handsign_classifier/cnn_evaluator/:/usr/src/app/
+      - ./output:/usr/src/app/output/
+      - ./input:/usr/src/app/input/
+    ports:
+      - "8011:8011"
+    command:
+      python3 app.py
+
+  cnn_trainer:
+    build:
+      context: .
+      dockerfile: ./handsign_classifier/cnn_trainer/dockerfile
+    container_name: cnn_trainer
+    env_file:
+      - local.env
+    volumes:
+      - ./handsign_classifier/cnn_trainer/:/usr/src/app/
+      - ./output:/usr/src/app/output/
+      - ./input:/usr/src/app/input/
+    ports:
+      - "8012:8012"
+    command:
+      python3 app.py
+
+

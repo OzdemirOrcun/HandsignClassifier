@@ -1,0 +1,10 @@
+FROM python:3.7
+
+LABEL maintainer=osozdemirorcun@gmail.com
+
+WORKDIR /usr/src/app
+
+COPY ./handsign_classifier/cnn_creator/requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY ./handsign_classifier/cnn_creator ./

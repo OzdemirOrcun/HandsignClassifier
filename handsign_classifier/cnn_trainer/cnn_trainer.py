@@ -6,7 +6,7 @@ import tensorflow as tf
 #TODO: hyperparameter tuning
 #TODO: weight download, model save
 
-class CNNTRainer:
+class CNNTrainer:
     def __init__(self) -> None:
         self.learning_rate_reduction = tf.keras.callbacks.ReduceLROnPlateau(
     monitor='val_accuracy', patience = 2, verbose=1,factor=0.5, min_lr=0.00001)

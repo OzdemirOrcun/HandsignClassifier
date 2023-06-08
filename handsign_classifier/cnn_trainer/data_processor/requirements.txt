@@ -1,0 +1,5 @@
+aiohttp
+Flask
+numpy
+pymongo
+scikit_learn
