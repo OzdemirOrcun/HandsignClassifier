@@ -7,6 +7,8 @@ import tensorflow as tf
 #TODO: weight download, model save
 
 class CNNTrainer:
+    """CNNTrainer is responsible of compiling and fitting the CNN Model with given training data.
+    """    
     def __init__(self) -> None:
         self.learning_rate_reduction = tf.keras.callbacks.ReduceLROnPlateau(
     monitor='val_accuracy', patience = 2, verbose=1,factor=0.5, min_lr=0.00001)
@@ -24,6 +26,18 @@ class CNNTrainer:
 
 
     def compile_model(self,model):
+        """Compiles CNN model with TF fucntion.
+
+        Parameters
+        ----------
+        model : object
+            CNN model
+
+        Returns
+        -------
+        object
+            compiled model
+        """        
         model.compile(optimizer=self.optimizer,
                     loss=self.loss,
                     metrics=self.metrics)
@@ -31,6 +45,26 @@ class CNNTrainer:
 
 
     def fit_model(self,model,train_X,train_y,test_X,test_y):
+        """Fits CNN model with TF function
+
+        Parameters
+        ----------
+        model : object
+            Compiled Model
+        train_X : array
+            Independent Variables to be trained 
+        train_y : array
+            Dependent Variables to be trained
+        test_X : _type_
+            Independent Variables to be tested 
+        test_y : _type_
+            Dependent Variables to be tested
+
+        Returns
+        -------
+        object
+            output of TF fit function (History)
+        """        
         start = time()
         history = model.fit(train_X, train_y, epochs=self.epochs, batch_size = self.batch_size,   
                             validation_data=(test_X, test_y),callbacks=self.callbacks)

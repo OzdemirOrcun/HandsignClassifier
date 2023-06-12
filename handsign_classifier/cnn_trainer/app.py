@@ -27,6 +27,13 @@ cnn_trainer = CNNTrainer()
 data_processor = DataProcessor()
 
 def get_file_name():
+    """Returns the created cnn model's filename 
+
+    Returns
+    -------
+    str
+        CNN model filename with day,month,and year.
+    """  
     current_datetime = datetime.now()
 
     day = current_datetime.day
@@ -37,6 +44,17 @@ def get_file_name():
     return file_path
 
 def compile_model(CNNTrainer):
+    """Compiles and Saves CNN Model
+
+    Parameters
+    ----------
+    CNNTrainer : object
+        CNNTrainer is responsible of compiling and fitting the CNN Model with given training data.
+    Returns
+    -------
+    str
+        signal
+    """    
     with open(get_file_name(), 'rb') as file:
         model = pickle.load(file)
     model = CNNTrainer.compile_model(model)
@@ -48,6 +66,18 @@ def compile_model(CNNTrainer):
 
 
 def fit_model(CNNTrainer):
+    """Fits and saves CNN Model
+
+    Parameters
+    ----------
+    CNNTrainer : object
+        CNNTrainer is responsible of compiling and fitting the CNN Model with given training data.
+
+    Returns
+    -------
+    str
+        signal
+    """    
     file_name = get_file_name()
     with open(file_name, 'rb') as file:
         model = pickle.load(file)
@@ -73,6 +103,13 @@ def fit_model(CNNTrainer):
 
 @app.route("/cnntrainer", methods=["POST"])
 def cnn_trainer_endpoint():
+    """Endpoint function for CNNTrainer
+
+    Returns
+    -------
+    Jsonified dictionary
+        When POST requested based on the action endpoint returns the results.
+    """    
     action = request.json["action"]
 
     if request.method == "POST":

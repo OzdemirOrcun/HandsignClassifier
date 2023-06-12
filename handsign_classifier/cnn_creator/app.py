@@ -27,7 +27,18 @@ cnn_creator = CNNCreator()
 
 
 def build_default_model(CNNCreator):
+    """Builds and  saves default CNN model.
 
+    Parameters
+    ----------
+    CNNCreator : object
+        CNNCrator module creates CNN models for training.
+
+    Returns
+    -------
+    str
+        summary of the CNN model
+    """
     cnn_model,model_summary = CNNCreator.build_default_model(verbose=1)
     current_datetime = datetime.now()
 
@@ -46,6 +57,13 @@ def build_default_model(CNNCreator):
 
 @app.route("/cnncreator", methods=["POST"])
 def cnn_creator_endpoint():
+    """Endpoint function for CNNCreator
+
+    Returns
+    -------
+    Jsonified dictionary
+        When POST requested based on the action endpoint returns the results.
+    """  
     default = request.args.get("default", None)
 
     if request.method == "POST":

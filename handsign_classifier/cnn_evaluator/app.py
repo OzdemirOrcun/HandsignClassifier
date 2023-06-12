@@ -29,6 +29,13 @@ cnn_evaluator = CNNEvaluator()
 data_processor = DataProcessor()
 
 def get_file_name():
+    """Returns the created cnn model's filename 
+
+    Returns
+    -------
+    str
+        cnn model filename with day,month,and year.
+    """    
     current_datetime = datetime.now()
 
     day = current_datetime.day
@@ -39,7 +46,18 @@ def get_file_name():
     return file_path
 
 def get_f1_score(CNNEvaluator):
+    """Calculates the f1 score of the CNN model with test data from mongoDB.
 
+    Parameters
+    ----------
+    CNNEvaluator : object
+        CNNEvaluator module loads CNN models and applies evaluation metrics to them.
+
+    Returns
+    -------
+    float
+        F1 Score of CNN Classifier Model
+    """
     test_X,test_y = data_processor.load_test_data()
     reshaped_test_X = data_processor.reshape_data(test_X)
 
@@ -51,7 +69,18 @@ def get_f1_score(CNNEvaluator):
     return f1_score
 
 def evaluate_model(CNNEvaluator):
+    """Uses keras' default evaluation function
 
+    Parameters
+    ----------
+    CNNEvaluator : Object
+        CNNEvaluator module loads CNN models and applies evaluation metrics to them.
+
+    Returns
+    -------
+    list
+        List of loss and accuracy results of the given CNN model.
+    """
     test_X,test_y = data_processor.load_test_data()
     reshaped_test_X = data_processor.reshape_data(test_X)
 
@@ -65,6 +94,13 @@ def evaluate_model(CNNEvaluator):
 
 @app.route("/cnnevaluator", methods=["POST"])
 def cnn_evaluator_endpoint():
+    """Endpoint function for CNNEvaluator
+
+    Returns
+    -------
+    Jsonified dictionary
+        When POST requested based on the action endpoint returns the results.
+    """    
     action = request.json["action"]
 
     if request.method == "POST":
@@ -85,15 +121,6 @@ def cnn_evaluator_endpoint():
 
 def build_url(hostname, specified_port, path, url_vars):
     return f"http://{hostname}:{specified_port}/{path}?{urlencode(url_vars)}"
-
-
-def check_key(dict_, key):
-    """ Checks dict key, if not exits return None """
-    try:
-        return dict_[key]
-    except KeyError as e:
-        print(e)
-        return None
 
 
 async def async_get_request(url):
